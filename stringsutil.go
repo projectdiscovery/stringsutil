@@ -98,3 +98,13 @@ func Join(elems []interface{}, sep string) string {
 	}
 	return b.String()
 }
+
+// HasPrefixI is case insensitive HasPrefix
+func HasPrefixI(s, prefix string) bool {
+	return strings.HasPrefix(strings.ToLower(s), prefix)
+}
+
+// HasSuffixI is case insensitive HasSuffix
+func HasSuffixI(s, suffix string) bool {
+	return strings.HasSuffix(strings.ToLower(s), suffix)
+}
