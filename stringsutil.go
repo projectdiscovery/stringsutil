@@ -108,3 +108,18 @@ func HasPrefixI(s, prefix string) bool {
 func HasSuffixI(s, suffix string) bool {
 	return strings.HasSuffix(strings.ToLower(s), suffix)
 }
+
+// Reverse the string
+func Reverse(s string) string {
+	n := 0
+	rune := make([]rune, len(s))
+	for _, r := range s {
+		rune[n] = r
+		n++
+	}
+	rune = rune[0:n]
+	for i := 0; i < n/2; i++ {
+		rune[i], rune[n-1-i] = rune[n-1-i], rune[i]
+	}
+	return string(rune)
+}
