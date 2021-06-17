@@ -123,3 +123,13 @@ func Reverse(s string) string {
 	}
 	return string(rune)
 }
+
+// ContainsAny returns true is s contains any specified substring
+func ContainsAny(s string, ss ...string) bool {
+	for _, sss := range ss {
+		if strings.Contains(s, sss) {
+			return true
+		}
+	}
+	return false
+}
