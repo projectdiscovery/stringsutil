@@ -7,6 +7,7 @@ import (
 
 // https://www.dotnetperls.com/between-before-after-go
 
+// Between extracts the string between a and b
 func Between(value string, a string, b string) string {
 	posFirst := strings.Index(value, a)
 	if posFirst == -1 {
@@ -23,6 +24,7 @@ func Between(value string, a string, b string) string {
 	return value[posFirstAdjusted:posLast]
 }
 
+// Before extracts the string before a from value
 func Before(value string, a string) string {
 	pos := strings.Index(value, a)
 	if pos == -1 {
@@ -31,6 +33,7 @@ func Before(value string, a string) string {
 	return value[0:pos]
 }
 
+// After extracts the string after a from value
 func After(value string, a string) string {
 	pos := strings.LastIndex(value, a)
 	if pos == -1 {
@@ -43,6 +46,7 @@ func After(value string, a string) string {
 	return value[adjustedPos:]
 }
 
+// HasPrefixAny checks if the string starts with any specified prefix
 func HasPrefixAny(s string, prefixes ...string) bool {
 	for _, prefix := range prefixes {
 		if strings.HasPrefix(s, prefix) {
@@ -52,6 +56,7 @@ func HasPrefixAny(s string, prefixes ...string) bool {
 	return false
 }
 
+// // HasSuffixAny checks if the string ends with any specified suffix
 func HasSuffixAny(s string, suffixes ...string) bool {
 	for _, suffix := range suffixes {
 		if strings.HasSuffix(s, suffix) {
@@ -61,6 +66,7 @@ func HasSuffixAny(s string, suffixes ...string) bool {
 	return false
 }
 
+// TrimPrefixAny trims all prefixes from string in order
 func TrimPrefixAny(s string, prefixes ...string) string {
 	for _, prefix := range prefixes {
 		s = strings.TrimPrefix(s, prefix)
@@ -68,6 +74,7 @@ func TrimPrefixAny(s string, prefixes ...string) string {
 	return s
 }
 
+// TrimPrefixAny trims all suffixes from string in order
 func TrimSuffixAny(s string, suffixes ...string) string {
 	for _, suffix := range suffixes {
 		s = strings.TrimSuffix(s, suffix)
