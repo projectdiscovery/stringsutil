@@ -14,8 +14,9 @@ type betweentest struct {
 
 func TestBetween(t *testing.T) {
 	tests := map[string]betweentest{
-		"a b c":          {After: "a", Before: "c", Result: " b "},
-		"this is a test": {After: "this", Before: "test", Result: " is a "},
+		"a b c":                   {After: "a", Before: "c", Result: " b "},
+		"this is a test":          {After: "this", Before: "test", Result: " is a "},
+		"this is a test bbb test": {After: "test", Before: "test", Result: " bbb "},
 	}
 	for str, test := range tests {
 		res := Between(str, test.After, test.Before)
