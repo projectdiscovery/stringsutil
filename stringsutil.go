@@ -9,19 +9,7 @@ import (
 
 // Between extracts the string between a and b
 func Between(value string, a string, b string) string {
-	posFirst := strings.Index(value, a)
-	if posFirst == -1 {
-		return ""
-	}
-	posLast := strings.Index(value, b)
-	if posLast == -1 {
-		return ""
-	}
-	posFirstAdjusted := posFirst + len(a)
-	if posFirstAdjusted >= posLast {
-		return ""
-	}
-	return value[posFirstAdjusted:posLast]
+	return Before(After(value, a), b)
 }
 
 // Before extracts the string before a from value
@@ -35,7 +23,7 @@ func Before(value string, a string) string {
 
 // After extracts the string after a from value
 func After(value string, a string) string {
-	pos := strings.LastIndex(value, a)
+	pos := strings.Index(value, a)
 	if pos == -1 {
 		return ""
 	}
