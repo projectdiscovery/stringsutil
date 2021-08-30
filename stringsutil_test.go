@@ -175,3 +175,15 @@ func TestContainsAny(t *testing.T) {
 		require.Equalf(t, test.Result, res, "test: %+v", res)
 	}
 }
+
+func TestEqualFoldAny(t *testing.T) {
+	tests := map[string]containstest{
+		"abc":   {Items: []string{"a", "Abc"}, Result: true},
+		"abcd":  {Items: []string{"x", "ABcD"}, Result: true},
+		"A b C": {Items: []string{"x"}, Result: false},
+	}
+	for str, test := range tests {
+		res := EqualFoldAny(str, test.Items...)
+		require.Equalf(t, test.Result, res, "test: %+v", res)
+	}
+}
