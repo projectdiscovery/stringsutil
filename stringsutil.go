@@ -96,12 +96,12 @@ func Join(elems []interface{}, sep string) string {
 
 // HasPrefixI is case insensitive HasPrefix
 func HasPrefixI(s, prefix string) bool {
-	return strings.HasPrefix(strings.ToLower(s), prefix)
+	return strings.HasPrefix(strings.ToLower(s), strings.ToLower(prefix))
 }
 
 // HasSuffixI is case insensitive HasSuffix
 func HasSuffixI(s, suffix string) bool {
-	return strings.HasSuffix(strings.ToLower(s), suffix)
+	return strings.HasSuffix(strings.ToLower(s), strings.ToLower(suffix))
 }
 
 // Reverse the string
