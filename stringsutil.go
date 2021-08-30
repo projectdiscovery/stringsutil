@@ -128,3 +128,13 @@ func ContainsAny(s string, ss ...string) bool {
 	}
 	return false
 }
+
+// EqualFoldsAny returns true is s is equal to any specified substring
+func EqualFoldAny(s string, ss ...string) bool {
+	for _, sss := range ss {
+		if strings.EqualFold(s, sss) {
+			return true
+		}
+	}
+	return false
+}
