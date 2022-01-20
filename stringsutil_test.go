@@ -187,3 +187,22 @@ func TestEqualFoldAny(t *testing.T) {
 		require.Equalf(t, test.Result, res, "test: %+v", res)
 	}
 }
+
+type attest struct {
+	After  int
+	Search string
+	Result interface{}
+}
+
+func TestIndexAt(t *testing.T) {
+	tests := map[string]attest{
+		"a a b":          {After: 1, Search: "a", Result: 2},
+		"test":           {After: 1, Search: "t", Result: 3},
+		"test test":      {After: 4, Search: "test", Result: 5},
+		"test test test": {After: 0, Search: "test", Result: 0},
+	}
+	for str, test := range tests {
+		res := IndexAt(str, test.Search, test.After)
+		require.Equalf(t, test.Result, res, "test: %s after: %d search: %s result: %d", str, test.After, test.Search, res)
+	}
+}

@@ -138,3 +138,12 @@ func EqualFoldAny(s string, ss ...string) bool {
 	}
 	return false
 }
+
+// IndexAt look for a substring starting at position x
+func IndexAt(s, sep string, n int) int {
+	idx := strings.Index(s[n:], sep)
+	if idx > -1 {
+		idx += n
+	}
+	return idx
+}
