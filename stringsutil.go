@@ -156,3 +156,27 @@ func SplitAny(s string, seps ...string) []string {
 	}
 	return strings.FieldsFunc(s, splitter)
 }
+
+func SlideWithLength(s string, l int) chan string {
+	out := make(chan string)
+
+	go func(s string, l int) {
+		defer close(out)
+
+		if len(s) < l {
+			out <- s
+			return
+		}
+
+		for i := 0; i < len(s); i++ {
+			if i+l <= len(s) {
+				out <- s[i : i+l]
+			} else {
+				out <- s[i:]
+				break
+			}
+		}
+	}(s, l)
+
+	return out
+}
