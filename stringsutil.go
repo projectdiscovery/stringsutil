@@ -147,3 +147,12 @@ func IndexAt(s, sep string, n int) int {
 	}
 	return idx
 }
+
+// SplitAny string by a list of separators
+func SplitAny(s string, seps ...string) []string {
+	sepsStr := strings.Join(seps, "")
+	splitter := func(r rune) bool {
+		return strings.ContainsRune(sepsStr, r)
+	}
+	return strings.FieldsFunc(s, splitter)
+}
