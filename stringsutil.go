@@ -157,6 +157,7 @@ func SplitAny(s string, seps ...string) []string {
 	return strings.FieldsFunc(s, splitter)
 }
 
+// SlideWithLength returns all the strings of the specified length while moving forward the extraction window
 func SlideWithLength(s string, l int) chan string {
 	out := make(chan string)
 
