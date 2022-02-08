@@ -147,3 +147,37 @@ func IndexAt(s, sep string, n int) int {
 	}
 	return idx
 }
+
+// SplitAny string by a list of separators
+func SplitAny(s string, seps ...string) []string {
+	sepsStr := strings.Join(seps, "")
+	splitter := func(r rune) bool {
+		return strings.ContainsRune(sepsStr, r)
+	}
+	return strings.FieldsFunc(s, splitter)
+}
+
+// SlideWithLength returns all the strings of the specified length while moving forward the extraction window
+func SlideWithLength(s string, l int) chan string {
+	out := make(chan string)
+
+	go func(s string, l int) {
+		defer close(out)
+
+		if len(s) < l {
+			out <- s
+			return
+		}
+
+		for i := 0; i < len(s); i++ {
+			if i+l <= len(s) {
+				out <- s[i : i+l]
+			} else {
+				out <- s[i:]
+				break
+			}
+		}
+	}(s, l)
+
+	return out
+}
