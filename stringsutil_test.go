@@ -206,3 +206,29 @@ func TestIndexAt(t *testing.T) {
 		require.Equalf(t, test.Result, res, "test: %s after: %d search: %s result: %d", str, test.After, test.Search, res)
 	}
 }
+
+type splitanytest struct {
+	Splitset []string
+	Result   interface{}
+}
+
+func TestSplitAny(t *testing.T) {
+	tests := map[string]splitanytest{
+		"a a b":        {Splitset: []string{" "}, Result: []string{"a", "a", "b"}},
+		"test1test2 3": {Splitset: []string{"1", "2", " "}, Result: []string{"test", "test", "3"}},
+	}
+	for str, test := range tests {
+		res := SplitAny(str, test.Splitset...)
+		require.Equalf(t, test.Result, res, "test: %s splitset: %v result: %v got: %v", str, test.Splitset, test.Result, res)
+	}
+}
+
+func TestSlideWithLength(t *testing.T) {
+	var res []string
+	c := SlideWithLength("test123", 4)
+	require.NotNil(t, c)
+	for cc := range c {
+		res = append(res, cc)
+	}
+	require.Equal(t, []string{"test", "est1", "st12", "t123", "123"}, res)
+}
