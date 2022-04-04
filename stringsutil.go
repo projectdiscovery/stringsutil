@@ -181,3 +181,12 @@ func SlideWithLength(s string, l int) chan string {
 
 	return out
 }
+
+// ReplaceAll returns a copy of the string s with all
+// instances of old incrementally replaced by new.
+func ReplaceAny(s, new string, olds ...string) string {
+	for _, old := range olds {
+		s = strings.ReplaceAll(s, old, new)
+	}
+	return s
+}
