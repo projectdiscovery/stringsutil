@@ -7,41 +7,55 @@ import (
 )
 
 type betweentest struct {
-	After  string
-	Before string
-	Result string
+	After     string
+	Before    string
+	Result    string
+	WantError bool
 }
 
 func TestBetween(t *testing.T) {
 	tests := map[string]betweentest{
-		"a b c":                   {After: "a", Before: "c", Result: " b "},
-		"this is a test":          {After: "this", Before: "test", Result: " is a "},
-		"this is a test bbb test": {After: "test", Before: "test", Result: " bbb "},
+		"a b c":                            {After: "a", Before: "c", Result: " b ", WantError: false},
+		"this is a test":                   {After: "this", Before: "test", Result: " is a ", WantError: false},
+		"this is a test bbb test":          {After: "test", Before: "test", Result: " bbb ", WantError: false},
+		"this is a test with before error": {After: "test", Before: "testt", Result: "this is a test with before error", WantError: true},
+		"this is a test with after error":  {After: "testt", Before: "test", Result: "this is a test with after error", WantError: true},
 	}
 	for str, test := range tests {
-		res := Between(str, test.After, test.Before)
+		res, err := Between(str, test.After, test.Before)
+		if test.WantError {
+			require.Error(t, err)
+		}
 		require.Equalf(t, test.Result, res, "test: %s after: %s before: %s result: %s", str, test.After, test.Before, res)
 	}
 }
 
 func TestBefore(t *testing.T) {
 	tests := map[string]betweentest{
-		"a b c":          {Before: "c", Result: "a b "},
-		"this is a test": {Before: "test", Result: "this is a "},
+		"a b c":                        {Before: "c", Result: "a b ", WantError: false},
+		"this is a test":               {Before: "test", Result: "this is a ", WantError: false},
+		"this is a test with second t": {Before: "testt", Result: "this is a test with second t", WantError: true},
 	}
 	for str, test := range tests {
-		res := Before(str, test.Before)
+		res, err := Before(str, test.Before)
+		if test.WantError {
+			require.Error(t, err)
+		}
 		require.Equalf(t, test.Result, res, "test: %s before: %s result: %s", str, test.Before, res)
 	}
 }
 
 func TestAfter(t *testing.T) {
 	tests := map[string]betweentest{
-		"a b c":          {After: "a", Result: " b c"},
-		"this is a test": {After: "this", Result: " is a test"},
+		"a b c":                        {After: "a", Result: " b c", WantError: false},
+		"this is a test":               {After: "this", Result: " is a test", WantError: false},
+		"this is a test with second t": {After: "testt", Result: "this is a test with second t", WantError: true},
 	}
 	for str, test := range tests {
-		res := After(str, test.After)
+		res, err := After(str, test.After)
+		if test.WantError {
+			require.Error(t, err)
+		}
 		require.Equalf(t, test.Result, res, "test: %s after: %s result: %s", str, test.After, res)
 	}
 }
