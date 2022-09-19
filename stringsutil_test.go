@@ -163,9 +163,12 @@ func TestHasSuffixI(t *testing.T) {
 
 func TestReverse(t *testing.T) {
 	tests := map[string]string{
-		"abc":    "cba",
-		"A b C":  "C b A",
-		"Ab c d": "d c bA",
+		"abc":          "cba",
+		"A b C":        "C b A",
+		"Ab c d":       "d c bA",
+		"hello world!": "!dlrow olleh",
+		"!@#$%^&*()":   ")(*&^%$#@!",
+		"明日は晴天り":       "り天晴は日明",
 	}
 	for str, expRes := range tests {
 		res := Reverse(str)
@@ -176,6 +179,12 @@ func TestReverse(t *testing.T) {
 type containstest struct {
 	Items  []string
 	Result bool
+}
+
+type replacealltest struct {
+	Old    string
+	New    string
+	Result string
 }
 
 func TestContainsAny(t *testing.T) {
@@ -195,6 +204,8 @@ func TestEqualFoldAny(t *testing.T) {
 		"abc":   {Items: []string{"a", "Abc"}, Result: true},
 		"abcd":  {Items: []string{"x", "ABcD"}, Result: true},
 		"A b C": {Items: []string{"x"}, Result: false},
+		"hello": {Items: []string{"llo", "heLLo"}, Result: true},
+		"world": {Items: []string{"Hello", "WoRld"}, Result: true},
 	}
 	for str, test := range tests {
 		res := EqualFoldAny(str, test.Items...)
@@ -245,4 +256,17 @@ func TestSlideWithLength(t *testing.T) {
 		res = append(res, cc)
 	}
 	require.Equal(t, []string{"test", "est1", "st12", "t123", "123"}, res)
+}
+
+func TestReplaceAll(t *testing.T) {
+	tests := map[string]replacealltest{
+		"hello":      {Old: "l", New: "k", Result: "hekko"},
+		"abcd":       {Old: "a", New: "b", Result: "bbcd"},
+		"A b C":      {Old: " ", New: "", Result: "AbC"},
+		"!@#$%^&*()": {Old: "@", New: "_", Result: "!_#$%^&*()"},
+	}
+	for str, test := range tests {
+		res := ReplaceAll(str, test.New, test.Old)
+		require.Equalf(t, test.Result, res, "test: %s, new: %s, old: %s, expected: %s, got: %s", str, test.New, test.Old, test.Result, res)
+	}
 }
