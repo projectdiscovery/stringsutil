@@ -1,3 +1,4 @@
+// Deprecated: use github.com/projectdiscovery/utils/strings instead
 module github.com/projectdiscovery/stringsutil
 
 go 1.16
